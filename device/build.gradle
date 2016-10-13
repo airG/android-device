@@ -6,6 +6,7 @@ apply from: "$rootDir/dependencies.gradle"
 logger.quiet("android-device-$VERSION_NAME ($VERSION_CODE)")
 
 ext {
+    bintrayOrg = 'airgoss'
     bintrayRepo = 'airGOss'
     bintrayName = 'device'
 
