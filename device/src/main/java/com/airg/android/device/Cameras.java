@@ -87,7 +87,7 @@ public class Cameras {
      @param context active context
      @return true if the device supports raw formats, false otherwise.
      */
-    @TargetApi (Build.VERSION_CODES.LOLLIPOP)
+    @TargetApi (LOLLIPOP)
     public static boolean supportsRaw (final Context context) {
         return ApiLevel.atLeast (LOLLIPOP) &&
                hasSystemFeature (context, PackageManager.FEATURE_CAMERA_CAPABILITY_RAW);
