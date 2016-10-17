@@ -21,7 +21,6 @@ package com.airg.android.device;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

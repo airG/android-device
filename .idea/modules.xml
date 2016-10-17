@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/airg-android-device.iml" filepath="$PROJECT_DIR$/airg-android-device.iml" />
       <module fileurl="file://$PROJECT_DIR$/device/device.iml" filepath="$PROJECT_DIR$/device/device.iml" />
+      <module fileurl="file://$PROJECT_DIR$/oss-device.iml" filepath="$PROJECT_DIR$/oss-device.iml" />
       <module fileurl="file://$PROJECT_DIR$/sample/sample.iml" filepath="$PROJECT_DIR$/sample/sample.iml" />
     </modules>
   </component>

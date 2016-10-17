@@ -44,7 +44,7 @@ public final class ApiLevel {
      @return true if the current api version is equal to or older than the test version
      */
     public static boolean atMost (final int version) {
-        return SDK_INT >= version;
+        return SDK_INT <= version;
     }
 
     /**
