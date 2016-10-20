@@ -24,6 +24,12 @@ import android.util.TypedValue;
 
 import lombok.Getter;
 
+import static android.util.TypedValue.COMPLEX_UNIT_DIP;
+import static android.util.TypedValue.COMPLEX_UNIT_IN;
+import static android.util.TypedValue.COMPLEX_UNIT_MM;
+import static android.util.TypedValue.COMPLEX_UNIT_PT;
+import static android.util.TypedValue.COMPLEX_UNIT_PX;
+import static android.util.TypedValue.COMPLEX_UNIT_SP;
 import static com.airg.android.device.Device.getDefaultDisplayMetrics;
 
 /**
@@ -49,30 +55,100 @@ public final class UnitConverter {
     /**
      * Convert a dimension to a complex size
      *
-     * @param f    pixel size
-     * @param unit target size unit
-     * @return converted value in target units
+     * @param f        dimension value
+     * @param fromUnit source dimension unit
+     * @param toUnit   target dimension unit
+     * @return converted dimension value (in pixels or portions thereof)
      */
-    public float convert(final float f, final int unit) {
-        return 0f == f ? 0 : TypedValue.applyDimension(unit, f, displayMetrics);
+    public float convert(final float f, final int fromUnit, final int toUnit) {
+        if (!validUnit(fromUnit))
+            throw new IllegalArgumentException("Unknown source unit");
+
+        if (!validUnit(toUnit))
+            throw new IllegalArgumentException("Unknown target unit");
+
+        if (0f == f) return 0;
+        if (fromUnit == toUnit) return f;
+
+        final float value = TypedValue.applyDimension(fromUnit, f, displayMetrics);
+
+        // inverting applyDimension, basically
+        switch (toUnit) {
+            case COMPLEX_UNIT_PX:
+                return value;
+            case COMPLEX_UNIT_DIP:
+                return f2dp(value);
+            case COMPLEX_UNIT_SP:
+                return f2sp(value);
+            case COMPLEX_UNIT_PT:
+                return f2pt(value);
+            case COMPLEX_UNIT_IN:
+                return f2in(value);
+            case COMPLEX_UNIT_MM:
+                return f2mm(value);
+            default:
+                throw new IllegalArgumentException("Unknown target unit");
+        }
+    }
+
+    /**
+     * Convert a dimension to points (pt)
+     *
+     * @param f simension value
+     * @return converted to points
+     */
+    public float f2pt(final float f) {
+        return 0f == f ? 0f : (f * 72f) / displayMetrics.xdpi;
     }
 
     /**
      * Convert a dimension to device independent pixels (dips)
+     *
      * @param f dimension size
      * @return dimension size in dips
      */
     public float f2dp(final float f) {
-        return convert(f, TypedValue.COMPLEX_UNIT_DIP);
+        return 0f == f ? 0f : f / displayMetrics.density;
     }
 
     /**
      * Convert a dimension to scaled pixels
+     *
      * @param f dimension size
      * @return dimension size in sps
      */
     public float f2sp(final float f) {
-        return convert(f, TypedValue.COMPLEX_UNIT_SP);
+        return 0f == f ? 0f : f / displayMetrics.scaledDensity;
+    }
+
+    /**
+     * Convert a dimension to inches
+     *
+     * @param f dimension size
+     * @return dimension size in inches
+     */
+    public float f2in(final float f) {
+        return 0f == f ? 0f : f / displayMetrics.xdpi;
+    }
+
+    /**
+     * Convert a dimension to millimeters
+     *
+     * @param f dimension size
+     * @return dimension size in millimeters
+     */
+    public float f2mm(final float f) {
+        return 0f == f ? 0f : f2in(f) * 25.4f;
+    }
+
+    /**
+     * Convert a dimension to centimeters
+     *
+     * @param f dimension size
+     * @return dimension size in centimeters
+     */
+    public float f2cm(final float f) {
+        return 0f == f ? 0f : f2in(f) * 2.54f;
     }
 
     /**
@@ -82,13 +158,13 @@ public final class UnitConverter {
      * @return dp equivalent of the given pixel size.
      */
     public float px2dp(final int px) {
-        return 0 == px ? 0f : (float) px / displayMetrics.density;
+        return f2dp((float) px);
     }
 
     /**
      * Convert a single dp value to pixels
      *
-     * @param dp      dp size
+     * @param dp dp size
      * @return pixel equivalent of provided dps
      */
     public int dp2px(final float dp) {
@@ -98,7 +174,7 @@ public final class UnitConverter {
     /**
      * Convert a pixel size to sps
      *
-     * @param px      pixel size
+     * @param px pixel size
      * @return sp equivalent of the given pixel size.
      */
     public float px2sp(final int px) {
@@ -108,7 +184,7 @@ public final class UnitConverter {
     /**
      * Convert a single sp value to pixels
      *
-     * @param sp      sp size
+     * @param sp sp size
      * @return pixel equivalent of provided sps
      */
     public int sp2px(final float sp) {
@@ -118,7 +194,7 @@ public final class UnitConverter {
     /**
      * Convert at an array of pixel sizes to dps
      *
-     * @param pxs     pixel sizes
+     * @param pxs pixel sizes
      * @return converted equivalent dp values
      */
     public float[] pxs2dps(final int... pxs) {
@@ -136,7 +212,7 @@ public final class UnitConverter {
     /**
      * Convert at an array of dp sizes to pixels
      *
-     * @param dps     dp sizes
+     * @param dps dp sizes
      * @return converted equivalent pixel values
      */
     public int[] dps2pxs(final float... dps) {
@@ -154,7 +230,7 @@ public final class UnitConverter {
     /**
      * Convert at an array of pixel sizes to sps
      *
-     * @param pxs     pixel sizes
+     * @param pxs pixel sizes
      * @return converted equivalent sp values
      */
     public float[] pxs2sps(final int... pxs) {
@@ -172,7 +248,7 @@ public final class UnitConverter {
     /**
      * Convert at an array of sp sizes to pixels
      *
-     * @param sps     sp sizes
+     * @param sps sp sizes
      * @return converted equivalent pixel values
      */
     public int[] sps2pxs(final float... sps) {
@@ -190,10 +266,20 @@ public final class UnitConverter {
     /* ----------------- Static Methods ----------------- */
 
     /**
-     * See {@link #convert(float, int)}
+     * See {@link #convert(float, int, int)}
      */
-    public static float convert(final Context context, final float f, final int unit) {
-        return new UnitConverter(context).convert(f, unit);
+    public static float convert(final Context context,
+                                final float f,
+                                final int fromUnit,
+                                final int toUnit) {
+        return new UnitConverter(context).convert(f, fromUnit, toUnit);
+    }
+
+    /**
+     * See {@link #f2pt(float)}
+     */
+    public static float f2pt(final Context context, final float f) {
+        return 0f == f ? 0f : new UnitConverter(context).f2pt(f);
     }
 
     /**
@@ -208,6 +294,27 @@ public final class UnitConverter {
      */
     public static float f2sp(final Context context, final float f) {
         return 0f == f ? 0f : new UnitConverter(context).f2sp(f);
+    }
+
+    /**
+     * See {@link #f2in(float)}
+     */
+    public static float f2in(final Context context, final float f) {
+        return 0f == f ? 0f : new UnitConverter(context).f2in(f);
+    }
+
+    /**
+     * See {@link #f2mm(float)}
+     */
+    public static float f2mm(final Context context, final float f) {
+        return 0f == f ? 0f : new UnitConverter(context).f2mm(f);
+    }
+
+    /**
+     * See {@link #f2cm(float)}
+     */
+    public static float f2cm(final Context context, final float f) {
+        return 0f == f ? 0f : new UnitConverter(context).f2cm(f);
     }
 
     /**
@@ -264,5 +371,22 @@ public final class UnitConverter {
      */
     public static int[] sps2pxs(final Context context, final float... sps) {
         return new UnitConverter(context).sps2pxs(sps);
+    }
+
+    /* ----------------- Helper Methods ----------------- */
+    private static boolean validUnit(final int toUnit) {
+        switch (toUnit) {
+            case COMPLEX_UNIT_PX:
+            case COMPLEX_UNIT_DIP:
+            case COMPLEX_UNIT_SP:
+            case COMPLEX_UNIT_PT:
+            case COMPLEX_UNIT_IN:
+            case COMPLEX_UNIT_MM:
+                // all valid units
+                return true;
+            default:
+                // masks and others
+                return false;
+        }
     }
 }

@@ -1,10 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="dim5dp" >5dp</dimen>
     <dimen name="dim0dp" >0dp</dimen>
+    <dimen name="dim5dp" >5dp</dimen>
+    <dimen name="dim23dp" >23dp</dimen>
+    <dimen name="dim55dp" >55dp</dimen>
+    <dimen name="dim123dp" >123dp</dimen>
+    <dimen name="dim467dp" >467dp</dimen>
 
-    <dimen name="dim12sp">12sp</dimen>
     <dimen name="dim0sp">0sp</dimen>
+    <dimen name="dim12sp">12sp</dimen>
+    <dimen name="dim40sp">40sp</dimen>
+    <dimen name="dim69sp">69sp</dimen>
+    <dimen name="dim123sp">123sp</dimen>
 
+    <dimen name="dim0mm">0mm</dimen>
+    <dimen name="dim33mm">33mm</dimen>
+    <dimen name="dim90mm">90mm</dimen>
+    <dimen name="dim182mm">182mm</dimen>
 
+    <dimen name="dim0pt">0pt</dimen>
+    <dimen name="dim8pt">8pt</dimen>
+    <dimen name="dim72pt">72pt</dimen>
+    <dimen name="dim169pt">169pt</dimen>
+    <dimen name="dim666pt">666pt</dimen>
+
+    <dimen name="dim0in">0in</dimen>
+    <dimen name="dim2in">2in</dimen>
+    <dimen name="dim31in">31in</dimen>
+    <dimen name="dim101in">101in</dimen>
+    <dimen name="dim1234in">1234in</dimen>
 </resources>
