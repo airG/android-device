@@ -286,7 +286,7 @@ public class Device {
      *
      * @param context context through which to access configuration
      * @return {@link View#LAYOUT_DIRECTION_LTR} if the layout direction is left-to-right
-     * (or api < android-17), {@link View#LAYOUT_DIRECTION_RTL} otherwise.
+     * (or api &lt; android-17), {@link View#LAYOUT_DIRECTION_RTL} otherwise.
      */
     @TargetApi(JELLY_BEAN_MR1)
     public static int getLayoutDirection(final Context context) {
