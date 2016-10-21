@@ -70,7 +70,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.7'
 }
 
-//apply from: 'https://raw.githubusercontent.com/airG/JCenter/master/install.gradle'
-//apply from: 'https://raw.githubusercontent.com/airG/JCenter/master/bintray.gradle'
-apply from: '../../JCenter/install.gradle'
-apply from: '../../JCenter/bintray.gradle'
+apply from: 'https://raw.githubusercontent.com/airG/JCenter/master/install.gradle'
+apply from: 'https://raw.githubusercontent.com/airG/JCenter/master/bintray.gradle'
+//apply from: '../../JCenter/install.gradle'
+//apply from: '../../JCenter/bintray.gradle'
