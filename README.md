@@ -3,6 +3,8 @@
 #Android Device
 The airG android device library is a group of utility methods for getting runtime information about the device such as API Level, Camera availability, Connectivity, Soft Keyboard utilities, and generic hardware information (CPU core count, hardware id, etc.). All of the functionality here is available through various services and classes in the Android SDK, but this library just gives you a few shortcuts to them.
 
+`compile 'com.airg.android:device:+@aar'`
+
 ##API Levels
 The `ApiLevel` contains simple API Level query methods such as `atLeast (int minApiLevel)`, `atMost (int maxApilevel)`, `is (int targetApiLevel)`, `get ()`, and more. You'd ideally do an `import static` on the desired methods and use them where needed.
 
