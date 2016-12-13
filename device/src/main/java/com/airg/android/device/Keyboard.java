@@ -26,52 +26,85 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
-This class provides some common soft-keyboard functionality.
+ * This class provides some common soft-keyboard functionality.
  */
-@SuppressWarnings ( {"UnusedDeclaration", "WeakerAccess"})
-@NoArgsConstructor (access = AccessLevel.PRIVATE)
+@SuppressWarnings({"UnusedDeclaration", "WeakerAccess"})
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Keyboard {
     /**
-     Get a handle to the {@link InputMethodManager} system service.
-     @param context current context
-     @return an {@link InputMethodManager} associated with the provided context
+     * Get a handle to the {@link InputMethodManager} system service.
+     *
+     * @param context current context
+     * @return an {@link InputMethodManager} associated with the provided context
      */
-    public static InputMethodManager getInputMethodManager (final Context context) {
-        return Device.getSystemService (context, Context.INPUT_METHOD_SERVICE);
+    public static InputMethodManager getInputMethodManager(final Context context) {
+        return Device.getSystemService(context, Context.INPUT_METHOD_SERVICE);
     }
 
     /**
-     Show the soft keyboard
-     @param context current context
-     @param view View to attach soft keyboard to
+     * Show the soft keyboard.
+     * This method calls the {@link #show(Context, View, int)} method with the {@link InputMethodManager#SHOW_FORCED} flag.
      */
-    public static void show (final Context context, final View view) {
-        getInputMethodManager (context).showSoftInputFromInputMethod (view.getWindowToken (), 0);
+    public static void show(final Context context, final View view) {
+        show(context, view, InputMethodManager.SHOW_FORCED);
     }
 
     /**
-     Hide the soft keyboard
-     @param context current context
-     @param view View to hide keyboard from
+     * Show the soft keyboard
+     *
+     * @param context current context
+     * @param view    View to attach soft keyboard to
+     * @param flags   {@link InputMethodManager} flags to use
      */
-    public static void hide (final Context context, final View view) {
-        getInputMethodManager (context).hideSoftInputFromWindow (view.getWindowToken (), 0);
+    public static void show(final Context context, final View view, final int flags) {
+        getInputMethodManager(context).showSoftInputFromInputMethod(view.getWindowToken(), flags);
     }
 
     /**
-     Toggle the Keyboard
-     @param context current context
-     @param view View on which to toggle soft keyboard
+     * Hide the soft keyboard. This method uses the {@link #hide(Context, View, int)} with the
+     * {@link InputMethodManager#HIDE_IMPLICIT_ONLY} flag.
      */
-    public static void toggle (final Context context, final View view) {
-        getInputMethodManager (context).toggleSoftInputFromWindow (view.getWindowToken (), 0, 0);
+    public static void hide(final Context context, final View view) {
+        hide(context, view, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     /**
-     Show the input method picker
-     @param context current context
+     * Hide the soft keyboard
+     *
+     * @param context current context
+     * @param view    View to hide keyboard from
+     * @param flags   {@link InputMethodManager} flags to use
      */
-    private static void showInputMethodPicker (final Context context) {
-        getInputMethodManager (context).showInputMethodPicker ();
+    public static void hide(final Context context, final View view, final int flags) {
+        getInputMethodManager(context).hideSoftInputFromWindow(view.getWindowToken(), flags);
+    }
+
+    /**
+     * Toggle the Keyboard. This method uses the {@link #toggle(Context, View, int, int)} with the
+     * {@link InputMethodManager#SHOW_FORCED} and {@link InputMethodManager#HIDE_IMPLICIT_ONLY} flags.
+     */
+    public static void toggle(final Context context, final View view) {
+        toggle(context, view, InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+    }
+
+    /**
+     * Toggle the Keyboard
+     *
+     * @param context   current context
+     * @param view      View on which to toggle soft keyboard
+     * @param showFlags {@link InputMethodManager} flags to use for show
+     * @param hideFlags {@link InputMethodManager} flags to use for hide
+     */
+    public static void toggle(final Context context, final View view, final int showFlags, final int hideFlags) {
+        getInputMethodManager(context).toggleSoftInputFromWindow(view.getWindowToken(), showFlags, hideFlags);
+    }
+
+    /**
+     * Show the input method picker
+     *
+     * @param context current context
+     */
+    private static void showInputMethodPicker(final Context context) {
+        getInputMethodManager(context).showInputMethodPicker();
     }
 }
