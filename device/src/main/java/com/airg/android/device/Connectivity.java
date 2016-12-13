@@ -36,15 +36,18 @@ import lombok.Getter;
 @SuppressWarnings({"UnusedDeclaration", "WeakerAccess"})
 public class Connectivity {
 
+    private final Context context;
+
     @Getter
     private final ConnectivityManager connectivityManager;
 
     /**
      * Constructor
      *
-     * @param context active context
+     * @param c active context
      */
-    public Connectivity(final Context context) {
+    public Connectivity(final Context c) {
+        context = c;
         connectivityManager = getConnectivityManager(context);
     }
 
@@ -78,21 +81,36 @@ public class Connectivity {
     }
 
     /**
+     * Subscribe to network change events (see {@link #unsubscribe(Context, BroadcastReceiver)}).
+     * Be sure to call {@link #unsubscribe(BroadcastReceiver)} when done.
+     */
+    public void subscribe(@NonNull final BroadcastReceiver receiver) {
+        subscribe(context, receiver);
+    }
+
+    /**
      * Subscribe to network change events. Be sure to call {@link #unsubscribe(Context, BroadcastReceiver)} when done.
      *
-     * @param context a {@link Context} on which to register the receiver
+     * @param context  a {@link Context} on which to register the receiver
      * @param receiver receiver to subscribe to network change events
      */
-    public void subscribe(@NonNull final Context context, @NonNull final BroadcastReceiver receiver) {
+    public static void subscribe(@NonNull final Context context, @NonNull final BroadcastReceiver receiver) {
         context.registerReceiver(receiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     /**
-     *
-     * @param context a {@link Context} on which to register the receiver
+     * Unsubscribe from network change events (see {@link #unsubscribe(Context, BroadcastReceiver)}).
+     */
+    public void unsubscribe(@NonNull final BroadcastReceiver receiver) {
+        unsubscribe(context, receiver);
+    }
+
+    /**
+     * Unsubscribe from network change events
+     * @param context  a {@link Context} on which to register the receiver
      * @param receiver receiver to unsubscribe from network change events
      */
-    public void unsubscribe(@NonNull final Context context, @NonNull final BroadcastReceiver receiver) {
+    public static void unsubscribe(@NonNull final Context context, @NonNull final BroadcastReceiver receiver) {
         context.unregisterReceiver(receiver);
     }
 
