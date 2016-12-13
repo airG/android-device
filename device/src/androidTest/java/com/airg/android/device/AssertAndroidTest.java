@@ -11,152 +11,152 @@ import lombok.EqualsAndHashCode;
 public class AssertAndroidTest {
     @Test
     public void assertNotNull() throws Exception {
-        Assert.assertNotNull("bob");
+        Assert.notNull("bob");
 
         //noinspection RedundantStringConstructorCall
         final String str = new String ();
-        Assert.assertNotNull(str);
+        Assert.notNull(str);
 
-        Assert.assertNotNull(new Object());
+        Assert.notNull(new Object());
     }
 
     @Test (expected = NullPointerException.class)
     public void assertNotNullWithNullLiteral() throws Exception {
-        Assert.assertNotNull(null);
+        Assert.notNull(null);
     }
 
     @Test (expected = NullPointerException.class)
     public void assertNotNullWithNullReference() throws Exception {
         final String str = null;
-        Assert.assertNotNull(str);
+        Assert.notNull(str);
     }
 
     @Test
     public void assertIsNull() throws Exception {
-        Assert.assertIsNull(null);
+        Assert.isNull(null);
 
         final String str = null;
-        Assert.assertIsNull(str);
+        Assert.isNull(str);
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertIsNullWithNonNullLiteral() throws Exception {
-        Assert.assertIsNull("bob");
+        Assert.isNull("bob");
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertIsNullWithNonNullReference() throws Exception {
         final String str = "bob";
-        Assert.assertIsNull(str);
+        Assert.isNull(str);
     }
 
     @Test
     public void assertIsEmpty() throws Exception {
-        Assert.assertIsEmpty(null);
-        Assert.assertIsEmpty("");
+        Assert.isEmpty(null);
+        Assert.isEmpty("");
         //noinspection RedundantStringConstructorCall
-        Assert.assertIsEmpty(new String());
-        Assert.assertIsEmpty(new StringBuilder());
+        Assert.isEmpty(new String());
+        Assert.isEmpty(new StringBuilder());
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertIsEmptyWithNonEmptyLiteral() throws Exception {
-        Assert.assertIsEmpty("bob");
+        Assert.isEmpty("bob");
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertIsEmptyWithNonEmptyReference() throws Exception {
         final String bob = "bob";
-        Assert.assertIsEmpty(bob);
+        Assert.isEmpty(bob);
     }
 
     @Test
     public void assertNotEmpty() throws Exception {
-        Assert.assertNotEmpty("bob");
-        Assert.assertNotEmpty(new StringBuilder("bob"));
+        Assert.notEmpty("bob");
+        Assert.notEmpty(new StringBuilder("bob"));
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertNotEmptyWithNullLiteral() throws Exception {
-        Assert.assertNotEmpty(null);
+        Assert.notEmpty(null);
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertNotEmptyWithEmptyLiteral() throws Exception {
-        Assert.assertNotEmpty("");
+        Assert.notEmpty("");
     }
 
     @Test
     public void assertEqual() throws Exception {
-        Assert.assertEqual(null, null);
-        Assert.assertEqual(6, 6);
-        Assert.assertEqual("bob", "bob");
+        Assert.equal(null, null);
+        Assert.equal(6, 6);
+        Assert.equal("bob", "bob");
         //noinspection RedundantStringConstructorCall
-        Assert.assertEqual(new String(), "");
+        Assert.equal(new String(), "");
         final Object o = new Object();
-        Assert.assertEqual(o, o);
+        Assert.equal(o, o);
         final String bob = "bob";
-        Assert.assertEqual(bob, "bob");
+        Assert.equal(bob, "bob");
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertEqualWithLeftNull() throws Exception {
-        Assert.assertEqual(null, "bob");
+        Assert.equal(null, "bob");
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertEqualWithRightNull() throws Exception {
-        Assert.assertEqual("bob", null);
+        Assert.equal("bob", null);
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertEqualWithUnequals() throws Exception {
-        Assert.assertEqual("bob", "Sally");
+        Assert.equal("bob", "Sally");
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertEqualWithUnequalTypes() throws Exception {
-        Assert.assertEqual("bob", 808);
+        Assert.equal("bob", 808);
     }
 
     @Test
     public void assertNotEqual() throws Exception {
-        Assert.assertNotEqual(0, 1);
-        Assert.assertNotEqual("bob", 808);
-        Assert.assertNotEqual("bob", null);
-        Assert.assertNotEqual(null, "bob");
-        Assert.assertNotEqual("bob", "sally");
+        Assert.notEqual(0, 1);
+        Assert.notEqual("bob", 808);
+        Assert.notEqual("bob", null);
+        Assert.notEqual(null, "bob");
+        Assert.notEqual("bob", "sally");
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertNotEqualWithReferenceEqual() throws Exception {
         final String sttr = "bob";
-        Assert.assertNotEqual(sttr, sttr);
+        Assert.notEqual(sttr, sttr);
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertNotEqualWithValueEqual() throws Exception {
-        Assert.assertNotEqual("bob", "bob");
+        Assert.notEqual("bob", "bob");
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertNotEqualWithBothNull() throws Exception {
-        Assert.assertNotEqual(null, null);
+        Assert.notEqual(null, null);
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertNotEqualWithEqualInts() throws Exception {
-        Assert.assertNotEqual(808, 808);
+        Assert.notEqual(808, 808);
     }
 
     @Test
     public void assertReferenceEqual() throws Exception {
-        Assert.assertReferenceEqual(null, null);
+        Assert.referenceEqual(null, null);
         final String str ="bob";
-        Assert.assertReferenceEqual(str, str);
+        Assert.referenceEqual(str, str);
         //noinspection UnnecessaryLocalVariable
         final String other = str;
-        Assert.assertReferenceEqual(str, other);
+        Assert.referenceEqual(str, other);
     }
 
     @Test (expected = IllegalStateException.class)
@@ -164,7 +164,7 @@ public class AssertAndroidTest {
         final String bob = "bob";
         //noinspection RedundantStringConstructorCall
         final String other = new String ("bob");
-        Assert.assertReferenceEqual(bob, other);
+        Assert.referenceEqual(bob, other);
     }
 
     @Test
@@ -172,24 +172,24 @@ public class AssertAndroidTest {
         final IntWrapper one = new IntWrapper(1);
         //noinspection UnnecessaryLocalVariable
         final IntWrapper other = one;
-        Assert.assertReferenceEqual(one, other);
+        Assert.referenceEqual(one, other);
         other.anInt = 12;
-        Assert.assertReferenceEqual(one, other);
+        Assert.referenceEqual(one, other);
     }
 
     @Test
     public void assertReferenceNotEqual() throws Exception {
         final IntWrapper one = new IntWrapper(1);
         final IntWrapper other = new IntWrapper(1);
-        Assert.assertReferenceNotEqual(one, other);
-        Assert.assertReferenceNotEqual(one, null);
-        Assert.assertReferenceNotEqual(null, other);
-        Assert.assertReferenceNotEqual("bob", other);
+        Assert.referenceNotEqual(one, other);
+        Assert.referenceNotEqual(one, null);
+        Assert.referenceNotEqual(null, other);
+        Assert.referenceNotEqual("bob", other);
     }
 
     @Test (expected = IllegalStateException.class)
     public void assertReferenceNotEqualWithBothNullReferences() throws Exception {
-        Assert.assertReferenceNotEqual(null, null);
+        Assert.referenceNotEqual(null, null);
     }
 
     @Test (expected = IllegalStateException.class)
@@ -197,7 +197,7 @@ public class AssertAndroidTest {
         final IntWrapper one = new IntWrapper(1);
         //noinspection UnnecessaryLocalVariable
         final IntWrapper other = one;
-        Assert.assertReferenceNotEqual(one, other);
+        Assert.referenceNotEqual(one, other);
     }
 
     @EqualsAndHashCode @AllArgsConstructor

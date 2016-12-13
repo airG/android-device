@@ -20,6 +20,8 @@ package com.airg.android.device;
 
 import android.text.TextUtils;
 
+import java.util.Collection;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -36,7 +38,7 @@ public final class Assert {
      * @param o instance to check
      * @throws NullPointerException if provided instance is <code>null</code>
      */
-    public static void assertNotNull(final Object o) {
+    public static void notNull(final Object o) {
         if (null != o) return;
 
         throw new NullPointerException("NotNull assertion failed");
@@ -48,7 +50,7 @@ public final class Assert {
      * @param o instance to check
      * @throws IllegalStateException if the instance is not <code>null</code>
      */
-    public static void assertIsNull(final Object o) {
+    public static void isNull(final Object o) {
         if (null == o) return;
 
         throw new IllegalStateException("IsNull assertion failed");
@@ -60,9 +62,18 @@ public final class Assert {
      * @param cs string to check
      * @throws IllegalStateException if provided string is not empty
      */
-    public static void assertIsEmpty(final CharSequence cs) {
+    public static void isEmpty(final CharSequence cs) {
         if (TextUtils.isEmpty(cs)) return;
         throw new IllegalStateException("IsEmpty assertion failed");
+    }
+
+    /**
+     * Asserts that the provided {@link Collection} is empty.
+     * @param collection collection to test
+     */
+    public static void isEmpty (final Collection<?> collection) {
+        if (collection.isEmpty()) return;
+        throw new IllegalStateException("Collection not empty");
     }
 
     /**
@@ -71,10 +82,20 @@ public final class Assert {
      * @param cs string to check
      * @throws IllegalStateException if provided string is empty or <code>null</code>
      */
-    public static void assertNotEmpty(final CharSequence cs) {
+    public static void notEmpty(final CharSequence cs) {
         if (!TextUtils.isEmpty(cs)) return;
 
         throw new IllegalStateException("NotEmpty assertion failed");
+    }
+
+    /**
+     * Asserts that the given collection is not empty.
+     * @param collection collection to test
+     */
+    public static void notEmpty (final Collection<?> collection) {
+        if (!collection.isEmpty())
+            return;
+        throw new IllegalStateException("Collection is empty");
     }
 
     /**
@@ -85,7 +106,7 @@ public final class Assert {
      * @param right second object
      * @throws IllegalStateException if the instances are not equal
      */
-    public static void assertEqual(final Object left, final Object right) {
+    public static void equal(final Object left, final Object right) {
         // either reference equal or value equal
         if (left == right ||
                 (null != left && null != right && left.equals(right)))
@@ -102,7 +123,7 @@ public final class Assert {
      * @param right second object
      * @throws IllegalStateException if the instances are equal
      */
-    public static void assertNotEqual(final Object left, final Object right) {
+    public static void notEqual(final Object left, final Object right) {
         if (left != right &&
                 (null == left || null == right || !left.equals(right)))
             return;
@@ -117,7 +138,7 @@ public final class Assert {
      * @param right second object
      * @throws IllegalStateException if the instances are not the same instance
      */
-    public static void assertReferenceEqual(final Object left, final Object right) {
+    public static void referenceEqual(final Object left, final Object right) {
         if (left == right) return;
         throw new IllegalStateException("ReferenceEqual assertion failed");
     }
@@ -130,8 +151,26 @@ public final class Assert {
      * @param right second object
      * @throws IllegalStateException if the instances are the same instance
      */
-    public static void assertReferenceNotEqual(final Object left, final Object right) {
+    public static void referenceNotEqual(final Object left, final Object right) {
         if (left != right) return;
         throw new IllegalStateException("ReferenceNotEqual assertion failed");
+    }
+
+    /**
+     * Asserts that the provided expression evaluates to <code>true</code>.
+     * @param expression expression to test
+     */
+    public static void isTrue (final boolean expression) {
+        if (expression) return;
+        throw new IllegalStateException("expression not true");
+    }
+
+    /**
+     * Asserts that the provided expression evaluates to <code>false</code>.
+     * @param expression expression to test
+     */
+    public static void isFalse (final boolean expression) {
+        if (!expression) return;
+        throw new IllegalStateException("expression not false");
     }
 }
