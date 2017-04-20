@@ -35,25 +35,26 @@ public final class Assert {
     /**
      * Asserts that the provided instance is not <code>null</code>
      *
-     * @param o instance to check
+     * @param os Object instances to check
      * @throws NullPointerException if provided instance is <code>null</code>
      */
-    public static void notNull(final Object o) {
-        if (null != o) return;
-
-        throw new NullPointerException("NotNull assertion failed");
+    public static void notNull(final Object... os) {
+        for (final Object o : os)
+            if (null == o) throw new NullPointerException("NotNull assertion failed");
     }
 
     /**
      * Asserts that the provided instance is <code>null</code>
      *
-     * @param o instance to check
+     * @param os Object instances to check
      * @throws IllegalStateException if the instance is not <code>null</code>
      */
-    public static void isNull(final Object o) {
-        if (null == o) return;
+    public static void isNull(final Object... os) {
+        if (null == os) return;
 
-        throw new IllegalStateException("IsNull assertion failed");
+        for (final Object o : os)
+            if (null != o)
+                throw new IllegalStateException("IsNull assertion failed");
     }
 
     /**
@@ -69,9 +70,10 @@ public final class Assert {
 
     /**
      * Asserts that the provided {@link Collection} is empty.
+     *
      * @param collection collection to test
      */
-    public static void isEmpty (final Collection<?> collection) {
+    public static void isEmpty(final Collection<?> collection) {
         if (collection.isEmpty()) return;
         throw new IllegalStateException("Collection not empty");
     }
@@ -90,9 +92,10 @@ public final class Assert {
 
     /**
      * Asserts that the given collection is not empty.
+     *
      * @param collection collection to test
      */
-    public static void notEmpty (final Collection<?> collection) {
+    public static void notEmpty(final Collection<?> collection) {
         if (!collection.isEmpty())
             return;
         throw new IllegalStateException("Collection is empty");
@@ -158,18 +161,20 @@ public final class Assert {
 
     /**
      * Asserts that the provided expression evaluates to <code>true</code>.
+     *
      * @param expression expression to test
      */
-    public static void isTrue (final boolean expression) {
+    public static void isTrue(final boolean expression) {
         if (expression) return;
         throw new IllegalStateException("expression not true");
     }
 
     /**
      * Asserts that the provided expression evaluates to <code>false</code>.
+     *
      * @param expression expression to test
      */
-    public static void isFalse (final boolean expression) {
+    public static void isFalse(final boolean expression) {
         if (!expression) return;
         throw new IllegalStateException("expression not false");
     }

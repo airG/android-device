@@ -26,9 +26,42 @@ public class AssertAndroidTest {
     }
 
     @Test (expected = NullPointerException.class)
+    public void assertNotNullWithFirstNullLiteral() throws Exception {
+        Assert.notNull(null, "", 1);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void assertNotNullWithMidNullLiteral() throws Exception {
+        Assert.notNull("", null, 1);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void assertNotNullWithLastNullLiteral() throws Exception {
+        Assert.notNull("", 1, null);
+    }
+
+    @Test (expected = NullPointerException.class)
     public void assertNotNullWithNullReference() throws Exception {
         final String str = null;
         Assert.notNull(str);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void assertNotNullWithFirstNullReference() throws Exception {
+        final String str = null;
+        Assert.notNull(str, "", 'a');
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void assertNotNullWithMidNullReference() throws Exception {
+        final String str = null;
+        Assert.notNull("", str, 'a');
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void assertNotNullWithLastNullReference() throws Exception {
+        final String str = null;
+        Assert.notNull("", 'a', str);
     }
 
     @Test
@@ -52,7 +85,7 @@ public class AssertAndroidTest {
 
     @Test
     public void assertIsEmpty() throws Exception {
-        Assert.isEmpty(null);
+        Assert.isEmpty((CharSequence) null);
         Assert.isEmpty("");
         //noinspection RedundantStringConstructorCall
         Assert.isEmpty(new String());
@@ -78,7 +111,7 @@ public class AssertAndroidTest {
 
     @Test (expected = IllegalStateException.class)
     public void assertNotEmptyWithNullLiteral() throws Exception {
-        Assert.notEmpty(null);
+        Assert.notEmpty((CharSequence) null);
     }
 
     @Test (expected = IllegalStateException.class)

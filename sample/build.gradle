@@ -1,19 +1,18 @@
 apply plugin: 'com.android.application'
 
 apply from: "$rootDir/version.gradle"
-apply from: "$rootDir/dependencies.gradle"
 
 android {
     // do not modify. These fields are auto generated in dependencies.gradle
-    compileSdkVersion COMPILE_SDK_VERSION
+    compileSdkVersion Integer.valueOf(COMPILE_SDK_VERSION)
     buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "com.airg.android.device.sample"
 
         // do not modify. These fields are auto generated in dependencies.gradle
-        minSdkVersion MIN_SDK_VERSION
-        targetSdkVersion COMPILE_SDK_VERSION
+        minSdkVersion Integer.valueOf(MIN_SDK_VERSION)
+        targetSdkVersion Integer.valueOf(COMPILE_SDK_VERSION)
 
         // do not modify. These fields are auto generated in version.gradle
         versionCode VERSION_CODE
