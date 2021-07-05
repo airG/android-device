@@ -29,10 +29,10 @@ android {
 }
 
 dependencies {
-    compile 'com.airg.android:device:0.06.01@aar'
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile "com.android.support:appcompat-v7:$SUPPORT_LIB_VERSION"
-    testCompile 'junit:junit:4.12'
+//    compile 'com.airg.android:device:0.06.01@aar'
+//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    })
+    implementation "com.android.support:appcompat-v7:$SUPPORT_LIB_VERSION"
+    testImplementation 'junit:junit:4.12'
 }
